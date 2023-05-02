@@ -17,7 +17,11 @@ contract AssetOwnership {
         assets[id] = Asset(msg.sender, name);
         emit AssetCreated(id, msg.sender);
     }
-
+    function transferAsset(uint256 id, address newOwner) public {
+        require(assets[id].owner == msg.sender, "Only asset owner can transfer ownership");
+        assets[id].owner = newOwner;
+        emit AssetTransferred(id, msg.sender, newOwner);
+    }
     function getAssetOwner(uint256 id) public view returns (address) {
         return assets[id].owner;
     }
